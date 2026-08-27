@@ -5,7 +5,7 @@ A heartfelt Digital Rakhi experience with Aarti, Tilak, Mithai, Rakhi tying anim
 
 ## 🌐 Live Demo
 
-👉 **[Try Digital Rakhi](YOUR_VERCEL_URL)**
+👉 https://digital-rakhi-eight.vercel.app**
 
 Experience the complete Digital Raksha Bandhan ceremony on mobile and desktop.
 ## 🎥 Experience
