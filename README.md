@@ -2,6 +2,18 @@
 A heartfelt Digital Rakhi experience with Aarti, Tilak, Mithai, Rakhi tying animation, Shagun, sibling messages &amp; a final Sibling Agreement. ❤️
 
 
+
+## 🌐 Live Demo
+
+👉 **[Try Digital Rakhi](YOUR_VERCEL_URL)**
+
+Experience the complete Digital Raksha Bandhan ceremony on mobile and desktop.
+## 🎥 Experience
+
+**Sister:** Choose Rakhi → Personalize → Share on WhatsApp
+
+**Bhai:** Aarti → Tilak → Mithai → Rakhi → Shagun → Message → Sibling Agreement ❤️
+
 # 🪷 Digital Rakhi – A Heartfelt Raksha Bandhan Experience ❤️
 
 A creative and interactive **Digital Rakhi web experience** that brings the beautiful bond between a brother and sister into the digital world.
@@ -246,7 +258,7 @@ digital-rakhi/
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/digital-rakhi.git
+git clone https://github.com/roma2020-app/digital-rakhi.git
 ```
 
 ## 2. Navigate to the project
