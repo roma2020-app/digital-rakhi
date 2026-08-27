@@ -255,7 +255,7 @@ export default function Home() {
     const text =
       `🪷 ${sister} ki taraf se ek special Rakhi ❤️\n\n` +
       `${brother}, tumhare liye Rakhi ready hai! 😄\n\n` +
-      `Link kholo aur Aarti, Tilak, Rakhi aur baaki special moments complete karo:\n` +
+      `Link kholiye aur Aarti, Tilak, Rakhi aur baaki special moments complete kariye:\n` +
       `${link}`;
 
     window.open(
@@ -643,10 +643,10 @@ export default function Home() {
                 </h3>
 
                 <p className="mt-3 text-sm leading-6 text-[#6b5b52]">
-                  WhatsApp par bhejo ya link copy karke {brother} ko send karo.
+                  WhatsApp par bhejiye ya link copy karke {brother} ko send kariye.
                   <br />
                   Bhai link kholkar Aarti, Tilak, Rakhi, Shagun aur final
-                  agreement complete karega. ❤️
+                  agreement complete karenge. ❤️
                 </p>
 
                 <div className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -655,7 +655,7 @@ export default function Home() {
                     onClick={shareOnWhatsApp}
                     className="rounded-2xl bg-[#25D366] px-5 py-4 font-bold text-white shadow-lg transition hover:-translate-y-1"
                   >
-                    💬 WhatsApp Par Bhejo
+                    💬 WhatsApp Par Bhai ko Share kare
                   </button>
 
                   <button
@@ -689,7 +689,7 @@ export default function Home() {
                   <br />
                   Ab Sister ki taraf se ceremony complete.
                   <br />
-                  <b>Next step Bhai karega. 😄</b>
+                  <b>Next step Bhai karenge. 😄</b>
                 </p>
               </div>
             </div>
