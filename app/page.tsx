@@ -23,27 +23,24 @@ const rakhiOptions = [
     id: "traditional",
     image: "/rakhi/om-rakhi.jpg",
     name: "ॐ Rakhi",
+    emoji: "🕉️",
     color: "#8B1E2D",
   },
   {
     id: "love",
     image: "/rakhi/love-rakhi.jpg",
     name: "Love Rakhi",
+    emoji: "❤️",
     color: "#C94C5A",
   },
   {
     id: "royal",
     image: "/rakhi/swastik-rakhi.jpg",
     name: "Swastik Rakhi",
+    emoji: "🪷",
     color: "#B68A35",
   },
 ];
-
-function getRakhiImage(rakhiId: string) {
-  if (rakhiId === "love") return "/rakhi/love-rakhi.jpg";
-  if (rakhiId === "royal") return "/rakhi/swastik-rakhi.jpg";
-  return "/rakhi/om-rakhi.jpg";
-}
 
 function makeRakhiLink(
   brother: string,
@@ -216,12 +213,6 @@ export default function Home() {
     setScreen("brother");
   }, []);
 
-  useEffect(() => {
-    // Preload music without autoplaying it.
-    audioRef.current?.load();
-  }, []);
-
-
   const next = (nextScreen: Screen) => {
     setScreen(nextScreen);
   };
@@ -255,7 +246,7 @@ export default function Home() {
     const text =
       `🪷 ${sister} ki taraf se ek special Rakhi ❤️\n\n` +
       `${brother}, tumhare liye Rakhi ready hai! 😄\n\n` +
-      `Link kholiye aur Aarti, Tilak, Rakhi aur baaki special moments complete kariye:\n` +
+      `Link kholo aur Aarti, Tilak, Rakhi aur baaki special moments complete karo:\n` +
       `${link}`;
 
     window.open(
@@ -299,24 +290,6 @@ export default function Home() {
 
   return (
     <>
-      <style jsx global>{`
-        html, body {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-          max-width: 100%;
-          overflow-x: hidden;
-        }
-        *, *::before, *::after {
-          box-sizing: border-box;
-        }
-        img, video, canvas {
-          max-width: 100%;
-        }
-        button, input, textarea {
-          max-width: 100%;
-        }
-      `}</style>
       <audio
         ref={audioRef}
         loop
@@ -332,7 +305,7 @@ export default function Home() {
         <source src="/audio/rakhi-theme.mp3" type="audio/mpeg" />
         <source src="/audio/rakhi-hindi-original-theme.mp3" type="audio/mpeg" />
       </audio>
-      <main className="min-h-screen w-full overflow-x-hidden bg-[#fff9f0] pb-4 text-[#2d2420]">
+      <main className="min-h-screen overflow-x-hidden bg-[#fff9f0] pb-4 text-[#2d2420]">
       <AnimatePresence mode="wait">
 
         {/* WELCOME */}
@@ -355,7 +328,7 @@ export default function Home() {
               A Digital Rakhi Experience
             </p>
 
-            <h1 className="max-w-3xl text-3xl font-bold leading-tight text-[#7a1f2b] sm:text-5xl md:text-7xl">
+            <h1 className="max-w-3xl text-5xl font-bold leading-tight text-[#7a1f2b] md:text-7xl">
               Meri Rakhi,
               <br />
               Mere Bhai Ke Naam ❤️
@@ -542,7 +515,7 @@ export default function Home() {
                 {[
                   "❤️ Hamesha khush rehna",
                   "🫶 Always there for you",
-                  "😂 Pareshan karta rahunga",
+                  "😂 Pareshan karte rahungi",
                   "🥹 Bachpan ki yaadein hamesha rahengi",
                 ].map((text) => (
                   <button
@@ -574,7 +547,7 @@ export default function Home() {
             className="flex min-h-screen items-center justify-center px-6 py-16 pb-24"
           >
             <div className="w-full max-w-md rounded-[2rem] border border-[#d4a84f]/40 bg-white p-10 text-center shadow-2xl">
-              <div className="text-7xl">{"🪷"}</div>
+              <div className="text-7xl"><img src={selectedRakhi.image} alt={selectedRakhi.name} className="w-32 h-32 object-contain mx-auto" /></div>
 
               <p className="mt-8 text-xs uppercase tracking-[0.3em] text-[#9b6b32]">
                 A Rakhi For
@@ -655,7 +628,7 @@ export default function Home() {
                     onClick={shareOnWhatsApp}
                     className="rounded-2xl bg-[#25D366] px-5 py-4 font-bold text-white shadow-lg transition hover:-translate-y-1"
                   >
-                    💬 WhatsApp Par Bhai ko Share kare
+                    💬 WhatsApp Par bhai ko Bhejiye
                   </button>
 
                   <button
@@ -663,7 +636,7 @@ export default function Home() {
                     onClick={copyRakhiLink}
                     className="rounded-2xl border-2 border-[#7a1f2b] bg-white px-5 py-4 font-bold text-[#7a1f2b] transition hover:-translate-y-1"
                   >
-                    {linkCopied ? "✅ Link Copied!" : "🔗 Link Copy Karo"}
+                    {linkCopied ? "✅ Link Copied!" : "🔗 Link Copy Kariye"}
                   </button>
                 </div>
 
@@ -710,7 +683,7 @@ export default function Home() {
               A Special Rakhi For You
             </p>
 
-            <h2 className="mt-4 text-3xl font-bold text-[#7a1f2b] sm:text-4xl md:text-5xl">
+            <h2 className="mt-4 text-5xl font-bold text-[#7a1f2b]">
               {brother} ❤️
             </h2>
 
@@ -724,53 +697,11 @@ export default function Home() {
 
             <button
               onClick={() => {
-                // Start music from the same user tap that opens the ceremony.
-                // This is required by Chrome/Firefox/mobile autoplay policies.
-                const audio = audioRef.current;
-
-                if (audio) {
-                  audio.pause();
-                  audio.currentTime = 0;
-                  audio.volume = 1;
-
-                  audio
-                    .play()
-                    .then(() => {
-                      setMusic(true);
-                    })
-                    .catch((error) => {
-                      console.error("Rakhi music could not start:", error);
-                      setMusic(false);
-                    });
-                }
-
                 next("tie");
               }}
               className="mt-10 rounded-full bg-[#7a1f2b] px-10 py-5 text-lg font-bold text-white shadow-xl transition hover:scale-105"
             >
-              🪷 Rakhi Kholo • 🎵 Music Shuru Karein
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                const audio = audioRef.current;
-                if (!audio) return;
-
-                audio.pause();
-                audio.currentTime = 0;
-                audio.volume = 1;
-
-                audio
-                  .play()
-                  .then(() => setMusic(true))
-                  .catch((error) =>
-                    console.error("Rakhi music playback failed:", error)
-                  );
-              }}
-              className="mt-4 rounded-full border border-[#d4a84f] bg-white px-6 py-2 text-sm font-semibold text-[#7a1f2b] shadow"
-            >
-              🎵 Music Nahi Aa Rahi? Yahan Tap Kijiye
+              🪷 Rakhi Kholiye
             </button>
 
             {music && (
@@ -787,129 +718,570 @@ export default function Home() {
             key="tie"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="min-h-screen w-full px-3 py-8 pb-24 sm:px-4 sm:py-10 md:px-6 md:py-16"
+            className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#fffaf2] via-[#fff0df] to-[#f8dcc4] px-5 py-10 pb-28 text-center"
           >
-            <div className="mx-auto max-w-4xl text-center">
-              <p className="text-sm uppercase tracking-[0.25em] text-[#9b6b32]">
-                🪷 Rakhi Ka Pyaara Sa Pal
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              {["🌸", "✨", "🌺", "🪷", "✨", "🌸"].map((item, i) => (
+                <motion.span
+                  key={i}
+                  animate={{
+                    y: [20, -120],
+                    opacity: [0.15, 0.8, 0],
+                    rotate: [0, 30, -20],
+                  }}
+                  transition={{
+                    duration: 4 + i * 0.4,
+                    repeat: Infinity,
+                    delay: i * 0.5,
+                  }}
+                  className="absolute text-2xl"
+                  style={{ left: `${8 + i * 16}%`, bottom: "-20px" }}
+                >
+                  {item}
+                </motion.span>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={toggleMusic}
+              className="absolute right-4 top-4 z-20 rounded-full border border-[#eadaca] bg-white/90 px-4 py-2 text-sm font-semibold text-[#7a1f2b] shadow-md backdrop-blur"
+              aria-label={music ? "Pause music" : "Play music"}
+            >
+              {music ? "🔊 Music On" : "🔇 Music Off"}
+            </button>
+
+            <div className="relative z-10 mx-auto flex min-h-[calc(100vh-8rem)] max-w-3xl flex-col items-center justify-center">
+              <p className="text-xs uppercase tracking-[0.3em] text-[#9b6b32]">
+                {sister} ❤️ {brother}
               </p>
 
-              <h2 className="mt-3 text-2xl font-bold text-[#7a1f2b] sm:text-3xl md:text-5xl">
-                Ab Rakhi Baandhne Ka Pyaara Pal Hai ❤️
-              </h2>
+              <AnimatePresence mode="wait">
+                {ritualStep === "aarti" && (
+                  <motion.div
+                    key="aarti"
+                    initial={{ opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="w-full"
+                  >
+                    <h2 className="mt-4 text-4xl font-bold text-[#7a1f2b] md:text-5xl">
+                      Pehle Ek Chhoti Si Aarti... 🪔
+                    </h2>
+                    <p className="mx-auto mt-4 max-w-xl leading-7 text-[#6b5b52]">
+                      Bhai hai toh rasam bhi toh banti hai. ❤️
+                      <br />
+                      Thoda sa pyaar, thodi si Aarti...
+                    </p>
 
-              <p className="mx-auto mt-4 max-w-xl text-[#6b5b52]">
-                Bhai, kripya apni kalai aage kijiye... 😊
-                <br />
-                Behen pyaar se Rakhi baandh rahi hai. 🪷
-              </p>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                      className="mx-auto mt-10 flex h-64 w-64 items-center justify-center rounded-full bg-white shadow-2xl"
+                    >
+                      <div className="flex h-48 w-48 items-center justify-center rounded-full border-8 border-[#d4a84f]/50 bg-gradient-to-br from-[#fff8d8] to-[#f3c36a] text-8xl">
+                        🪔
+                      </div>
+                    </motion.div>
 
-              <div className="relative mx-auto mt-7 h-[24rem] w-full max-w-2xl overflow-hidden rounded-[2rem] border border-[#eadaca] bg-gradient-to-b from-[#fffdf9] to-[#ffe9d3] shadow-2xl sm:h-[28rem] md:h-[34rem]">
-                {/* Bhai */}
-                <motion.div
-                  initial={{ y: -20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.8 }}
-                  className="absolute left-1/2 top-7 -translate-x-1/2 text-7xl md:text-8xl"
-                >
-                  👦
-                </motion.div>
+                    <button
+                      type="button"
+                      onClick={() => setRitualStep("tilak")}
+                      className="mt-8 rounded-full bg-[#7a1f2b] px-9 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+                    >
+                      Aarti Sampann Hui ❤️
+                    </button>
+                  </motion.div>
+                )}
 
-                {/* Forearm / wrist */}
-                <div className="absolute left-1/2 top-[43%] h-24 w-[88%] -translate-x-1/2 rounded-full sm:h-28 sm:w-[82%] border-4 border-[#d8a46b] bg-[#f4c39d] shadow-inner md:h-36">
-                  <div className="absolute inset-y-5 left-1/2 w-[78%] -translate-x-1/2 rounded-full bg-[#efb88d] opacity-60" />
-                </div>
+                {ritualStep === "tilak" && (
+                  <motion.div
+                    key="tilak"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full"
+                  >
+                    <h2 className="mt-4 text-4xl font-bold text-[#7a1f2b] md:text-5xl">
+                      Ab Tilak Bhi Ho Jaye... 🌹
+                    </h2>
+                    <p className="mx-auto mt-4 max-w-xl leading-7 text-[#6b5b52]">
+                      Thoda sa tika... aur Bhai ki VIP entry complete. 😄❤️
+                    </p>
 
-                {/* Selected Rakhi — starts above wrist and slowly comes down */}
-                <motion.div
-                  initial={{ y: -95, scale: 0.65, rotate: -12, opacity: 0 }}
-                  animate={{
-                    y: [ -95, -55, -10, 15 ],
-                    scale: [0.65, 0.8, 0.95, 1],
-                    rotate: [-12, -5, 4, 0],
-                    opacity: [0, 1, 1, 1],
-                  }}
-                  transition={{ duration: 4.2, times: [0, 0.28, 0.7, 1], ease: "easeInOut" }}
-                  className="absolute left-1/2 top-[36%] z-20 -translate-x-1/2"
-                >
-                  <img
-                    src={getRakhiImage(selectedRakhi.id)}
-                    alt={selectedRakhi.name}
-                    className="h-28 w-28 rounded-full object-cover border-4 border-white shadow-2xl md:h-36 md:w-36"
-                  />
-                </motion.div>
+                    <div className="relative mx-auto mt-10 flex h-80 w-full max-w-md items-center justify-center overflow-hidden rounded-[3rem] border border-[#eadaca] bg-gradient-to-b from-[#fffdf9] to-[#fff1df] shadow-2xl">
+                      {/* Bhai */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="relative text-[10rem] leading-none"
+                      >
+                        👦
 
-                {/* Rakhi threads wrap around the wrist */}
-                <motion.div
-                  initial={{ opacity: 0, scaleX: 0.2, rotate: -18 }}
-                  animate={{
-                    opacity: [0, 1, 1],
-                    scaleX: [0.2, 1, 1],
-                    rotate: [-18, -8, 0],
-                  }}
-                  transition={{ delay: 3.0, duration: 3.0, ease: "easeInOut" }}
-                  className="absolute left-1/2 top-[48%] z-30 h-2.5 w-[82%] -translate-x-1/2 sm:h-3 sm:w-[76%] rounded-full bg-[#b32636] shadow-md"
-                />
+                        {/* Forehead tilak: appears exactly on the forehead */}
+                        <motion.span
+                          initial={{ opacity: 0, scaleY: 0, y: -5 }}
+                          animate={{ opacity: 1, scaleY: 1, y: 0 }}
+                          transition={{ delay: 1.15, duration: 0.8, ease: "easeOut" }}
+                          className="absolute left-1/2 top-[20%] z-20 h-8 w-3 -translate-x-1/2 rounded-full bg-[#b32636] shadow-md"
+                        />
+                      </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, scaleX: 0.15, rotate: 18 }}
-                  animate={{
-                    opacity: [0, 1, 1],
-                    scaleX: [0.15, 1, 1],
-                    rotate: [18, 8, 0],
-                  }}
-                  transition={{ delay: 3.5, duration: 2.8, ease: "easeInOut" }}
-                  className="absolute left-1/2 top-[52%] z-30 h-2 w-[76%] -translate-x-1/2 sm:h-2.5 sm:w-[70%] rounded-full bg-[#d4a84f] shadow"
-                />
+                      {/* Sister's hand applying tilak */}
+                      <motion.div
+                        initial={{ x: 75, y: 95, opacity: 0, rotate: 18 }}
+                        animate={{ x: 25, y: 38, opacity: 1, rotate: 4 }}
+                        transition={{ delay: 0.55, duration: 1.25, ease: "easeInOut" }}
+                        className="absolute right-[19%] top-[18%] z-30 text-5xl"
+                      >
+                        ☝️
+                      </motion.div>
 
-                {/* Knot appears after the threads wrap */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0, rotate: -20 }}
-                  animate={{ opacity: 1, scale: [0, 1.15, 1], rotate: 0 }}
-                  transition={{ delay: 6.6, duration: 1.3, ease: "easeOut" }}
-                  className="absolute left-1/2 top-[46%] z-40 -translate-x-1/2 rounded-full bg-white p-2 shadow-xl ring-2 ring-[#d4a84f]"
-                >
-                  <img
-                    src={getRakhiImage(selectedRakhi.id)}
-                    alt="Rakhi tied"
-                    className="h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
-                  />
-                </motion.div>
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.7, duration: 0.6 }}
+                        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm font-semibold text-[#7a1f2b]"
+                      >
+                        🌹 Pyaar se Tilak lag gaya ❤️
+                      </motion.p>
+                    </div>
 
-                {/* Final emotional message */}
-                <motion.div
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 7.8, duration: 1 }}
-                  className="absolute bottom-7 left-1/2 w-[90%] -translate-x-1/2 rounded-2xl bg-white/90 px-5 py-4 shadow-lg"
-                >
-                  <p className="font-semibold text-[#7a1f2b]">
-                    ✨ Rakhi bandh gayi... ek rishta aur gehra ho gaya. ❤️
-                  </p>
-                </motion.div>
-              </div>
+                    <p className="mt-6 font-semibold text-[#7a1f2b]">
+                      Tilak lag gaya! ✨
+                    </p>
 
-              <p className="mt-5 text-sm font-medium text-[#9b6b32]">
-                🪷 Pehle Rakhi kalai tak... phir pyaar se knot... ❤️
-              </p>
+                    <button
+                      type="button"
+                      onClick={() => setRitualStep("mithai")}
+                      className="mt-7 rounded-full bg-[#7a1f2b] px-9 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+                    >
+                      Tilak Bhi Ho Gaya 🌹
+                    </button>
+                  </motion.div>
+                )}
 
-              <div className="mt-5">
-                <button
-                  type="button"
-                  onClick={() => {
-                    stopMusic();
-                    next("rules");
-                  }}
-                  className="rounded-full border-2 border-[#7a1f2b] bg-white px-7 py-3 font-semibold text-[#7a1f2b] shadow-md"
-                >
-                  Rakhi Bandh Gayi ❤️
-                </button>
-              </div>
+                {ritualStep === "mithai" && (
+                  <motion.div
+                    key="mithai"
+                    initial={{ opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full"
+                  >
+                    <h2 className="mt-4 text-4xl font-bold text-[#7a1f2b] md:text-5xl">
+                      🍬 Ab Mithai Lijiye, Bhai! ❤️
+                    </h2>
+                    <p className="mx-auto mt-4 max-w-xl leading-7 text-[#6b5b52]">
+                      Rakhi ki ceremony mein mithai mandatory hai. 😄
+                      <br />
+                      <b>Kripya ek mithai zaroor lijiye. ❤️</b> ❤️
+                    </p>
+
+                    <div className="relative mx-auto mt-10 flex h-72 w-full max-w-lg items-center justify-center rounded-[3rem] border border-[#eadaca] bg-white shadow-2xl">
+                      <motion.div
+                        animate={
+                          mithaiFed
+                            ? { x: 100, y: -20, scale: 0.7, rotate: 15 }
+                            : { y: [0, -8, 0] }
+                        }
+                        transition={
+                          mithaiFed
+                            ? { duration: 0.8 }
+                            : { duration: 2, repeat: Infinity }
+                        }
+                        className="text-8xl"
+                      >
+                        🍬
+                      </motion.div>
+                      <div className="absolute bottom-7 text-6xl">
+                        {mithaiFed ? "😋" : "👦"}
+                      </div>
+                    </div>
+
+                    {!mithaiFed ? (
+                      <button
+                        type="button"
+                        onClick={() => setMithaiFed(true)}
+                        className="mt-8 rounded-full bg-[#7a1f2b] px-9 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+                      >
+                        🍬 Mithai Lijiye, Bhai
+                      </button>
+                    ) : (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-7"
+                      >
+                        <p className="font-bold text-[#7a1f2b]">
+                          Mithai bhi ho gayi... ab ek pyari si smile bhi ho jaye. 😊❤️
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => setRitualStep("aashirwaad")}
+                          className="mt-6 rounded-full bg-[#7a1f2b] px-9 py-4 font-bold text-white shadow-lg"
+                        >
+                          Mithai Le Lijiye ❤️
+                        </button>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                )}
+
+                {ritualStep === "aashirwaad" && (
+                  <motion.div
+                    key="aashirwaad"
+                    initial={{ opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full"
+                  >
+                    <h2 className="mt-4 text-4xl font-bold text-[#7a1f2b] md:text-5xl">
+                      😏 Bhai, ab ek chhoti si baat maan lijiye... ❤️
+                    </h2>
+                    <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-[#6b5b52]">
+                      Mithai bhi kha li?
+                      <br />
+                      <b>Ab itna bhi khush mat ho jaiye, Bhai! 😄</b>
+                      <br />
+                      Ab zara Behen ka Aashirwaad bhi le lijiye. 🙏😌
+                    </p>
+
+                    <motion.div
+                      animate={{ y: [0, -8, 0] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="mx-auto mt-10 flex h-64 w-full max-w-lg items-center justify-center rounded-[3rem] border border-[#eadaca] bg-white shadow-2xl"
+                    >
+                      <div className="text-8xl">
+                        {blessingTaken ? "🙏❤️" : "😏🙏"}
+                      </div>
+                    </motion.div>
+
+                    {!blessingTaken ? (
+                      <button
+                        type="button"
+                        onClick={() => setBlessingTaken(true)}
+                        className="mt-8 rounded-full bg-[#7a1f2b] px-9 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+                      >
+                        🙏 Behen Ka Aashirwaad Le Lijiye
+                      </button>
+                    ) : (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mx-auto mt-7 max-w-xl"
+                      >
+                        <p className="font-semibold leading-7 text-[#7a1f2b]">
+                          Khush rahiye, Bhai... ❤️
+                          <br />
+                          Hamesha haste rahiye, tarakki karte rahiye,
+                          <br />
+                          aur haan... apni Behen ko kabhi bhooliyega mat! 😊
+                        </p>
+                        <p className="mt-4 font-bold text-[#9b6b32]">
+                          Aashirwaad toh dil se hai... ❤️
+                          <br />
+                          <span className="text-[#7a1f2b]">
+                            aur Shagun ki umeed toh rahegi hi! 😄🎁
+                          </span>
+                        </p>
+
+                        <button
+                          type="button"
+                          onClick={() => setRitualStep("rakhi")}
+                          className="mt-7 rounded-full bg-[#7a1f2b] px-9 py-4 font-bold text-white shadow-lg transition hover:scale-105"
+                        >
+                          🪷 Ab Rakhi Baandhne Ka Pyaara Sa Pal Hai ❤️
+                        </button>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                )}
+
+                {ritualStep === "rakhi" && (
+                  <motion.div
+                    key="rakhi"
+                    initial={{ opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="w-full"
+                  >
+                    <h2 className="mt-4 text-4xl font-bold text-[#7a1f2b] md:text-5xl">
+                      🪷 Ab Rakhi Bandhne Ka Time Hai
+                    </h2>
+
+                    <p className="mx-auto mt-4 max-w-xl leading-7 text-[#6b5b52]">
+                      Bhai, kripya apni kalai aage kijiye... 😊
+                      <br />
+                      <b>Rakhi hum khud pyaar se baandh denge. ❤️</b>
+                    </p>
+
+                    <div className="relative mx-auto mt-9 h-[25rem] w-full max-w-xl overflow-hidden rounded-[3rem] border border-[#eadaca] bg-gradient-to-b from-white to-[#fff7ee] shadow-2xl">
+                      {/* soft spotlight */}
+                      <motion.div
+                        animate={{ scale: [1, 1.08, 1], opacity: [0.35, 0.6, 0.35] }}
+                        transition={{ duration: 2.5, repeat: Infinity }}
+                        className="absolute left-1/2 top-8 h-40 w-40 -translate-x-1/2 rounded-full bg-[#f5d37c] blur-3xl"
+                      />
+
+                      {/* Brother */}
+                      <div className="absolute left-1/2 top-6 -translate-x-1/2 text-7xl">
+                        👦
+                      </div>
+
+                      {/* wrist / hand illustration */}
+                      <div className="absolute bottom-8 left-1/2 h-32 w-[82%] -translate-x-1/2 rounded-[5rem] border-4 border-[#d8a86c] bg-gradient-to-r from-[#eeb98e] via-[#f6c9a2] to-[#e9ad80] shadow-inner">
+                        <div className="absolute -right-5 top-1/2 h-24 w-20 -translate-y-1/2 rounded-r-[2.5rem] border-4 border-l-0 border-[#d8a86c] bg-[#efb98e]" />
+                        <div className="absolute left-1/2 top-1/2 h-24 w-36 -translate-x-1/2 -translate-y-1/2 rounded-[2rem] border-2 border-[#e2a675]/40 bg-[#f3c29a]/50" />
+                        <p className="absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-7 whitespace-nowrap text-xs font-bold text-[#7a1f2b]">
+                          🤲 Bhai Ki Kalai
+                        </p>
+                      </div>
+
+                      {/* Rakhi resting above the wrist before animation */}
+                      <motion.div
+                        className="absolute left-1/2 z-20 flex h-24 w-24 -translate-x-1/2 items-center justify-center rounded-full border-4 border-[#d4a84f]/70 bg-white shadow-xl"
+                        initial={{ top: "26%", scale: 0.8, opacity: 0.85 }}
+                        animate={{ top: "57%", scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.9, ease: "easeInOut" }}
+                      >
+                      <img src={selectedRakhi.image} alt={selectedRakhi.name} className="w-32 h-32 object-contain mx-auto" />
+                      </motion.div>
+
+                      {/* Decorative thread guides */}
+                      <div className="pointer-events-none absolute left-1/2 top-[58%] h-1 w-[62%] -translate-x-1/2 rounded-full bg-[#b1263a]/80" />
+                      <div className="pointer-events-none absolute left-1/2 top-[58%] h-1 w-[62%] -translate-x-1/2 rotate-180 rounded-full bg-[#d4a84f]/60" />
+
+                      <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs font-medium text-[#9b6b32]">
+                        ❤️ Bas ek click... phir Rakhi apne aap bandh jayegi
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        // IMPORTANT: play() is called directly inside the
+                        // user's tap/click so mobile browsers allow audio.
+                        const audio = audioRef.current;
+
+                        if (audio) {
+                          audio.currentTime = 0;
+                          audio.volume = 1;
+
+                          const playPromise = audio.play();
+
+                          if (playPromise !== undefined) {
+                            playPromise
+                              .then(() => {
+                                setMusic(true);
+                              })
+                              .catch((error) => {
+                                console.error(
+                                  "Rakhi music could not start:",
+                                  error
+                                );
+                                setMusic(false);
+                              });
+                          }
+                        }
+
+                        setRitualStep("tying");
+
+                        // Slow ceremony: music + animation stay together.
+                        window.setTimeout(() => {
+                          stopMusic();
+                          next("rules");
+                        }, 10500);
+                      }}
+                      className="mt-8 rounded-full bg-[#7a1f2b] px-10 py-4 text-base font-bold text-white shadow-xl transition hover:scale-105"
+                    >
+                      🪷 Rakhi Baandh Lijiye ❤️
+                    </button>
+                  </motion.div>
+                )}
+
+                {ritualStep === "tying" && (
+                  <motion.div
+                    key="tying"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full"
+                  >
+                    <h2 className="mt-4 text-4xl font-bold text-[#7a1f2b] md:text-5xl">
+                      ❤️ Rakhi Baandh Rahe Hain...
+                    </h2>
+
+                    <p className="mx-auto mt-3 max-w-xl text-[#6b5b52]">
+                      Dheere se... pyaar se... bilkul asli Rakhi ki tarah. 🪷
+                    </p>
+
+                    {!music && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const audio = audioRef.current;
+                          if (!audio) return;
+                          audio.currentTime = 0;
+                          audio.volume = 1;
+                          audio
+                            .play()
+                            .then(() => setMusic(true))
+                            .catch((error) =>
+                              console.error("Music playback failed:", error)
+                            );
+                        }}
+                        className="mb-4 rounded-full border-2 border-[#7a1f2b] bg-white px-7 py-3 font-bold text-[#7a1f2b] shadow-md"
+                      >
+                        🎵 Play Rakhi Music
+                      </button>
+                    )}
+
+                    <div className="relative mx-auto mt-8 h-[30rem] w-full max-w-xl overflow-hidden rounded-[3rem] border border-[#eadaca] bg-gradient-to-b from-white via-[#fff8ee] to-[#fde8d5] shadow-2xl">
+                      {/* glow */}
+                      <motion.div
+                        initial={{ scale: 0.6, opacity: 0 }}
+                        animate={{ scale: [0.8, 1.2, 0.95], opacity: [0, 0.7, 0.25] }}
+                        transition={{ duration: 4.5 }}
+                        className="absolute left-1/2 top-[36%] h-52 w-52 -translate-x-1/2 rounded-full bg-[#f5c96c] blur-3xl"
+                      />
+
+                      {/* smiling brother */}
+                      <motion.div
+                        animate={{ y: [0, -4, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="absolute left-1/2 top-5 -translate-x-1/2 text-7xl"
+                      >
+                        👦
+                      </motion.div>
+
+                      {/* forearm */}
+                      <div className="absolute bottom-10 left-1/2 h-36 w-[86%] -translate-x-1/2 rounded-[5rem] border-4 border-[#d8a86c] bg-gradient-to-r from-[#e9ad80] via-[#f6c9a2] to-[#eab184] shadow-inner">
+                        <div className="absolute -right-5 top-1/2 h-28 w-24 -translate-y-1/2 rounded-r-[3rem] border-4 border-l-0 border-[#d8a86c] bg-[#efb98e]" />
+                      </div>
+
+                      {/* thread wrapping around wrist */}
+                      <motion.div
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        animate={{ scaleX: 1, opacity: 1 }}
+                        transition={{ delay: 1.2, duration: 1.4 }}
+                        className="absolute bottom-[7.2rem] left-1/2 h-5 w-[68%] -translate-x-1/2 rounded-full border-2 border-[#8e1c2d] bg-[#c52e45] shadow-md"
+                      />
+
+                      {/* second thread crossing */}
+                      <motion.div
+                        initial={{ width: 0, opacity: 0, rotate: -12 }}
+                        animate={{ width: "62%", opacity: 1, rotate: 12 }}
+                        transition={{ delay: 2.6, duration: 1.5 }}
+                        className="absolute bottom-[7.4rem] left-1/2 h-3 -translate-x-1/2 rounded-full bg-[#e0ad42]"
+                      />
+
+                      {/* Rakhi moving into position */}
+                      <motion.div
+                        initial={{ top: "24%", scale: 0.65, rotate: -12, opacity: 0.9 }}
+                        animate={{
+                          top: "67%",
+                          scale: [0.65, 1.05, 1],
+                          rotate: [-12, 8, 0],
+                          opacity: 1,
+                        }}
+                        transition={{
+                          duration: 1.7,
+                          ease: "easeInOut",
+                          times: [0, 0.75, 1],
+                        }}
+                        className="absolute left-1/2 z-30 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-[#d4a84f] bg-white shadow-2xl"
+                      >
+                      <img src={selectedRakhi.image} alt={selectedRakhi.name} className="w-32 h-32 object-contain mx-auto" />
+                      </motion.div>
+
+                      {/* looping thread around the rakhi */}
+                      <motion.div
+                        initial={{ opacity: 0, rotate: -35, scale: 0.7 }}
+                        animate={{
+                          opacity: [0, 1, 1, 0],
+                          rotate: [-35, 25, -20, 0],
+                          scale: [0.7, 1.1, 1.05, 1],
+                        }}
+                        transition={{ delay: 3.4, duration: 2.4 }}
+                        className="absolute bottom-[6.1rem] left-1/2 z-20 h-36 w-64 -translate-x-1/2 rounded-full border-8 border-[#b1263a]/80"
+                      />
+
+                      {/* knot */}
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0, rotate: -25 }}
+                        animate={{ opacity: 1, scale: [0, 1.25, 1], rotate: 0 }}
+                        transition={{ delay: 5.8, duration: 1.2 }}
+                        className="absolute bottom-[6rem] left-1/2 z-40 flex -translate-x-1/2 items-center justify-center"
+                      >
+                        <span className="text-5xl">🪢</span>
+                      </motion.div>
+
+                      {/* bow ends */}
+                      <motion.div
+                        initial={{ opacity: 0, scaleX: 0 }}
+                        animate={{ opacity: 1, scaleX: 1 }}
+                        transition={{ delay: 7.0, duration: 1.0 }}
+                        className="absolute bottom-[4.7rem] left-1/2 z-30 h-12 w-52 -translate-x-1/2"
+                      >
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 -rotate-12 text-4xl">
+                          🎀
+                        </span>
+                        <span className="absolute right-0 top-1/2 -translate-y-1/2 rotate-12 text-4xl">
+                          🎀
+                        </span>
+                      </motion.div>
+
+                      {/* celebration */}
+                      {["✨", "🌸", "❤️", "✨", "🌺"].map((item, i) => (
+                        <motion.span
+                          key={i}
+                          initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                          animate={{
+                            opacity: [0, 1, 0],
+                            scale: [0.4, 1.2, 0.6],
+                            x: (i - 2) * 70,
+                            y: -90 - Math.abs(i - 2) * 20,
+                          }}
+                          transition={{ delay: 8.0 + i * 0.18, duration: 1.6 }}
+                          className="absolute left-1/2 top-[58%] z-50 text-3xl"
+                        >
+                          {item}
+                        </motion.span>
+                      ))}
+
+                      <motion.p
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 8.7, duration: 1 }}
+                        className="absolute bottom-5 left-1/2 w-[88%] -translate-x-1/2 text-center text-base font-bold leading-6 text-[#7a1f2b] md:text-lg"
+                      >
+                        🪷 Rakhi bandh gayi... dil bhi jud gaya. ❤️
+                        <br />
+                        <span className="text-sm font-semibold text-[#9b6b32]">
+                          Rakhi Accepted! ✨
+                        </span>
+                      </motion.p>
+                    </div>
+
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 4.1 }}
+                      className="mt-7 text-sm font-medium text-[#9b6b32]"
+                    >
+                      ✨ Ek rishta kalai par... aur ek dil mein. ❤️
+                    </motion.div>
+                  </motion.div>
+                )}
+
+              </AnimatePresence>
             </div>
           </motion.section>
         )}
 
-                {/* RULES */}
+        {/* RULES */}
         {screen === "rules" && (
           <motion.section
             key="rules"
@@ -989,7 +1361,7 @@ export default function Home() {
               ✨
             </motion.div>
 
-            <h2 className="mt-6 text-3xl font-bold text-[#7a1f2b] sm:text-4xl md:text-5xl">
+            <h2 className="mt-6 text-5xl font-bold text-[#7a1f2b]">
               Rakhi Accepted! ❤️
             </h2>
 
